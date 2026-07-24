@@ -94,7 +94,7 @@
   const T = {
     en: {
       'nav.about': 'About', 'nav.projects': 'Projects', 'nav.services': 'Services', 'nav.contact': 'Contact',
-      'auth.login': 'Login', 'auth.title': 'Sign in to your account', 'auth.desc': 'Access your requests and manage incoming messages.', 'auth.name': 'Full name', 'auth.signupTitle': 'Create your account', 'auth.signupDesc': 'Create an account to track your requests.', 'auth.signup': 'Create account', 'auth.createAccount': 'Create account', 'auth.haveAccount': 'Already have an account? Login', 'auth.portal': 'Portal', 'auth.email': 'Email', 'auth.password': 'Password', 'auth.logout': 'Logout', 'auth.invalid': 'Invalid email or password.', 'auth.demo': '',
+      'auth.login': 'Login', 'auth.title': 'Sign in to your account', 'auth.desc': 'Access your requests and manage incoming messages.', 'auth.signupTitle': 'Create your account', 'auth.signupDesc': 'Create an account to track your requests.', 'auth.signup': 'Create account', 'auth.createAccount': 'Create account', 'auth.haveAccount': 'Already have an account? Login', 'auth.portal': 'Portal', 'auth.email': 'Email', 'auth.password': 'Password', 'auth.logout': 'Logout', 'auth.invalid': 'Invalid email or password.', 'auth.demo': '',
       'requests.title': 'Requests', 'requests.total': 'Total Requests', 'requests.new': 'New Requests', 'requests.empty': 'No requests yet. Messages submitted through the contact form will appear here.', 'requests.newBadge': 'New request',
       'nav.cta': 'Get a Quote',
       'hero.district': '00 — ARRIVAL',
@@ -138,7 +138,7 @@
     },
     ar: {
       'nav.about': 'من نحن', 'nav.projects': 'المشاريع', 'nav.services': 'خدماتنا', 'nav.contact': 'اتصل بنا',
-      'auth.login': 'تسجيل الدخول', 'auth.title': 'تسجيل الدخول إلى حسابك', 'auth.desc': 'الوصول إلى الطلبات وإدارة الرسائل الواردة.', 'auth.name': 'الاسم الكامل', 'auth.signupTitle': 'إنشاء حساب', 'auth.signupDesc': 'أنشئ حسابًا لمتابعة طلباتك.', 'auth.signup': 'إنشاء حساب', 'auth.createAccount': 'إنشاء حساب', 'auth.haveAccount': 'لديك حساب بالفعل؟ تسجيل الدخول', 'auth.portal': 'البوابة', 'auth.email': 'البريد الإلكتروني', 'auth.password': 'كلمة المرور', 'auth.logout': 'تسجيل الخروج', 'auth.invalid': 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', 'auth.demo': '',
+      'auth.login': 'تسجيل الدخول', 'auth.title': 'تسجيل الدخول إلى حسابك', 'auth.desc': 'الوصول إلى الطلبات وإدارة الرسائل الواردة.', 'auth.signupTitle': 'إنشاء حساب', 'auth.signupDesc': 'أنشئ حسابًا لمتابعة طلباتك.', 'auth.signup': 'إنشاء حساب', 'auth.createAccount': 'إنشاء حساب', 'auth.haveAccount': 'لديك حساب بالفعل؟ تسجيل الدخول', 'auth.portal': 'البوابة', 'auth.email': 'البريد الإلكتروني', 'auth.password': 'كلمة المرور', 'auth.logout': 'تسجيل الخروج', 'auth.invalid': 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', 'auth.demo': '',
       'requests.title': 'الطلبات', 'requests.total': 'إجمالي الطلبات', 'requests.new': 'الطلبات الجديدة', 'requests.empty': 'لا توجد طلبات حتى الآن. ستظهر الرسائل المرسلة من نموذج التواصل هنا.', 'requests.newBadge': 'طلب جديد',
       'nav.cta': 'اطلب عرض سعر',
       'hero.district': '٠٠ — البداية',
@@ -544,16 +544,12 @@
   const authSubmit = document.getElementById('authSubmit');
   const authTitle = document.getElementById('authTitle');
   const authDesc = document.getElementById('authDesc');
-  const nameField = document.getElementById('nameField');
-  const signupName = document.getElementById('signupName');
   let authMode = 'login';
 
   const t = (key, fallback) => (T[currentLang] && T[currentLang][key]) || fallback;
   const setAuthMode = (mode) => {
     authMode = mode;
     const signup = mode === 'signup';
-    nameField.hidden = !signup;
-    signupName.required = signup;
     authTitle.textContent = signup ? t('auth.signupTitle', 'Create your account') : t('auth.title', 'Sign in to your account');
     authDesc.textContent = signup ? t('auth.signupDesc', 'Create an account to track your requests.') : t('auth.desc', 'Access your requests and manage incoming messages.');
     authSubmit.querySelector('span').textContent = signup ? t('auth.signup', 'Create account') : t('auth.login', 'Login');
@@ -642,18 +638,34 @@
     if (!supabaseClient) { loginNote.textContent = 'Supabase is not configured yet.'; return; }
     const email = document.getElementById('loginEmail').value.trim().toLowerCase();
     const password = document.getElementById('loginPassword').value;
-    loginNote.textContent = authMode === 'signup' ? 'Creating account...' : 'Signing in...';
-    if (authMode === 'signup') {
-      const name = signupName.value.trim();
-      const { data, error } = await supabaseClient.auth.signUp({ email, password, options: { data: { full_name: name } } });
+    const submitLabel = authSubmit.querySelector('span');
+    const submitIcon = authSubmit.querySelector('i');
+    const originalLabel = submitLabel ? submitLabel.textContent : '';
+    authSubmit.disabled = true;
+    authSubmit.classList.add('is-loading');
+    if (submitLabel) submitLabel.textContent = authMode === 'signup' ? 'Creating account...' : 'Signing in...';
+    if (submitIcon) submitIcon.className = 'fa-solid fa-spinner fa-spin';
+    loginNote.textContent = '';
+
+    try {
+      if (authMode === 'signup') {
+        const { data, error } = await supabaseClient.auth.signUp({ email, password });
+        if (error) { loginNote.textContent = error.message; return; }
+        if (data.session) { closeAuth(); openRequests(); }
+        else loginNote.textContent = 'Account created. Check your email to confirm your account, then sign in.';
+        return;
+      }
+
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
       if (error) { loginNote.textContent = error.message; return; }
-      if (data.session) { closeAuth(); openRequests(); }
-      else loginNote.textContent = 'Account created. Check your email to confirm your account, then sign in.';
-      return;
+      closeAuth();
+      openRequests();
+    } finally {
+      authSubmit.disabled = false;
+      authSubmit.classList.remove('is-loading');
+      if (submitLabel) submitLabel.textContent = originalLabel;
+      if (submitIcon) submitIcon.className = 'fa-solid fa-arrow-right';
     }
-    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-    if (error) { loginNote.textContent = error.message; return; }
-    closeAuth(); openRequests();
   });
 
   logoutBtn.addEventListener('click', async () => {
