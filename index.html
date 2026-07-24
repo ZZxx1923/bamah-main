@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BASMA AHED &mdash; General Contracting Company</title>
+<meta name="description" content="BASMA AHED &mdash; Leading general contracting company in Saudi Arabia. Construction, infrastructure, manpower supply and materials trading, aligned with Vision 2030.">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300..600&family=JetBrains+Mono:wght@400;500;600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+<!-- Supabase client: use the same project URL and anon key as the main Vercel app. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+</head>
+<body>
+
+<!-- ============ PRELOADER ============ -->
+<div id="preloader">
+  <div class="preloader-inner">
+    <div class="preloader-mark">
+      <svg viewBox="0 0 60 60" class="preloader-crane">
+        <line x1="6" y1="54" x2="6" y2="10" />
+        <line x1="6" y1="10" x2="48" y2="10" />
+        <line x1="6" y1="18" x2="16" y2="10" />
+        <line x1="30" y1="10" x2="30" y2="34" />
+        <circle cx="30" cy="36" r="2.2" />
+      </svg>
+    </div>
+    <div class="preloader-bar"><span id="preloaderFill"></span></div>
+    <div class="preloader-label"><span id="preloaderPct">00</span> / BASMA&nbsp;AHED</div>
+  </div>
+</div>
+
+<!-- ============ HUD GRID OVERLAY (signature element) ============ -->
+<div class="hud-overlay" aria-hidden="true">
+  <div class="hud-corner hud-bl">SITE&nbsp;/&nbsp;KSA&#8209;2030</div>
+  <div class="hud-corner hud-br"><span id="hudScrollPct">000</span>%</div>
+  <div class="hud-crosshair"></div>
+</div>
+
+<!-- ============ THREE.JS CANVAS ============ -->
+<canvas id="scene-canvas"></canvas>
+
+<!-- ============ NAVIGATION ============ -->
+<nav class="glass-nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">
+      <svg class="logo-mark" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="44" height="44" rx="10" fill="url(#navLogoGrad)"/>
+        <text x="22" y="27.5" text-anchor="middle" font-family="Space Grotesk, Arial, sans-serif" font-weight="700" font-size="17" letter-spacing="0.3" fill="#08090a">BA</text>
+        <line x1="9" y1="33.5" x2="35" y2="33.5" stroke="#08090a" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
+        <line x1="15.5" y1="33.5" x2="15.5" y2="30" stroke="#08090a" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
+        <line x1="28.5" y1="33.5" x2="28.5" y2="30.8" stroke="#08090a" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
+        <defs>
+          <linearGradient id="navLogoGrad" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#f7931e"/><stop offset="1" stop-color="#c9701a"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="logo-word">BASMA <em>AHED</em></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about" data-nav data-i18n="nav.about">About</a></li>
+      <li><a href="#projects" data-nav data-i18n="nav.projects">Projects</a></li>
+      <li><a href="#services" data-nav data-i18n="nav.services">Services</a></li>
+      <li><a href="#contact" data-nav data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta" data-i18n="nav.cta">Get a Quote</a>
+    <button class="nav-login" id="loginOpen" type="button"><i class="fa-solid fa-right-to-bracket"></i><span data-i18n="auth.login">Login</span></button>
+    <button class="lang-toggle" id="langToggle" type="button" aria-label="Toggle language">
+      <span class="lang-en active">EN</span><span class="lang-sep">/</span><span class="lang-ar">AR</span>
+    </button>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="#about" data-nav data-i18n="nav.about">About</a>
+    <a href="#projects" data-nav data-i18n="nav.projects">Projects</a>
+    <a href="#services" data-nav data-i18n="nav.services">Services</a>
+    <a href="#contact" data-nav data-i18n="nav.contact">Contact</a>
+    <button class="lang-toggle" id="langToggleMobile" type="button" aria-label="Toggle language">
+      <span class="lang-en active">EN</span><span class="lang-sep">/</span><span class="lang-ar">AR</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ SCROLL CONTENT ============ -->
+<main id="scrollContainer">
+
+  <!-- ===== HERO / DISTRICT 00 ===== -->
+  <section class="district" id="home" data-district="0">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="hero.district">00 — ARRIVAL</span></div>
+    <div class="hero-content">
+      <div class="eyebrow"><span class="dot"></span><span data-i18n="hero.eyebrow">GENERAL CONTRACTING &middot; SAUDI ARABIA</span></div>
+      <h1 class="hero-title">
+        <span class="line" data-i18n="hero.title1">Building</span>
+        <span class="line accent" data-i18n="hero.title2">Excellence</span>
+      </h1>
+      <p class="hero-subtitle-ar" dir="rtl">نبني التميز، نُنجز الابتكار</p>
+      <p class="hero-desc" data-i18n="hero.desc">BASMA AHED delivers comprehensive construction solutions, infrastructure development, manpower supply and materials trading across the Kingdom.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary"><span data-i18n="hero.exploreBtn">Explore Projects</span><i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#contact" class="btn btn-ghost"><span data-i18n="nav.cta">Get a Quote</span></a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><i class="fa-solid fa-helmet-safety"></i><span class="hero-stat-num">2,500+</span><span class="hero-stat-label" data-i18n="stats.projects">Projects Completed</span></div>
+        <div class="hero-stat"><i class="fa-solid fa-file-contract"></i><span class="hero-stat-num">200+</span><span class="hero-stat-label" data-i18n="stats.contracts">Major Contracts</span></div>
+        <div class="hero-stat"><i class="fa-solid fa-star"></i><span class="hero-stat-num">100%</span><span class="hero-stat-label" data-i18n="stats.satisfaction">Satisfaction Rate</span></div>
+        <div class="hero-stat"><i class="fa-solid fa-headset"></i><span class="hero-stat-num">24/7</span><span class="hero-stat-label" data-i18n="stats.support">Support Team</span></div>
+      </div>
+      <div class="hero-vision">
+        <i class="fa-solid fa-circle-nodes"></i>
+        <span data-i18n="hero.vision">Aligned with Vision 2030 &mdash; contributing to Saudi Arabia's economic growth and sustainable development.</span>
+      </div>
+    </div>
+    <div class="scroll-cue">
+      <span data-i18n="hero.scroll">SCROLL TO ENTER SITE</span>
+      <div class="scroll-cue-line"><span></span></div>
+    </div>
+  </section>
+
+  <!-- ===== DISTRICT 01 — ABOUT ===== -->
+  <section class="district district-statement" id="about" data-district="1">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="about.district">01 — FOUNDATION</span></div>
+    <div class="statement-content">
+      <p class="statement-text" data-i18n-html="about.statement">
+        <span class="hl">BASMA AHED</span> is a leading general contracting company in Saudi Arabia,
+        specializing in comprehensive construction solutions, infrastructure development, manpower
+        supply and materials trading — delivering transformative projects that contribute to the
+        Kingdom's growth and Vision 2030.
+      </p>
+      <div class="statement-meta">
+        <div class="meta-item"><span class="meta-label" data-i18n="about.projects">Projects</span><span class="meta-value">2,500+</span></div>
+        <div class="meta-item"><span class="meta-label" data-i18n="about.contracts">Contracts</span><span class="meta-value">200+</span></div>
+        <div class="meta-item"><span class="meta-label" data-i18n="about.coverage">Coverage</span><span class="meta-value" data-i18n="about.nationwide">Nationwide</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DISTRICT 02 — LEADERSHIP ===== -->
+  <section class="district district-leadership" id="leadership" data-district="2">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="leadership.district">02 — LEADERSHIP</span></div>
+    <div class="leadership-grid">
+      <div class="ceo-card" data-reveal>
+        <div class="ceo-card-top">
+          <div class="ceo-avatar">FA</div>
+          <div class="ceo-mascot-3d" id="ceoMascot3D" aria-hidden="true"></div>
+        </div>
+        <blockquote class="ceo-quote" data-i18n="leadership.quote">
+          "At BASMA AHED, we are committed to delivering exceptional value to our clients through
+          innovative solutions and unwavering dedication to quality. We believe in building not just
+          structures, but lasting partnerships that drive mutual success and contribute to Saudi
+          Arabia's ambitious development goals."
+        </blockquote>
+        <div class="ceo-name" data-i18n="leadership.ceoName">Faisal Ali Abdullah Al Qarni</div>
+        <div class="ceo-title" data-i18n="leadership.ceoTitle">Chief Executive Officer</div>
+      </div>
+      <div class="mvv-card" data-reveal>
+        <div class="mvv-item">
+          <span class="mvv-label"><i class="fa-solid fa-bullseye"></i> <span data-i18n="leadership.mission">Mission</span></span>
+          <p data-i18n="leadership.missionText">To deliver world-class construction and contracting services that transform communities and drive economic growth.</p>
+        </div>
+        <div class="mvv-item">
+          <span class="mvv-label"><i class="fa-solid fa-eye"></i> <span data-i18n="leadership.vision">Vision</span></span>
+          <p data-i18n="leadership.visionText">To be the most trusted and innovative contracting partner in the Middle East, known for excellence, integrity and sustainable development.</p>
+        </div>
+        <div class="mvv-item">
+          <span class="mvv-label"><i class="fa-solid fa-gem"></i> <span data-i18n="leadership.values">Values</span></span>
+          <p class="mvv-values" data-i18n="leadership.valuesText">Quality &middot; Innovation &middot; Integrity &middot; Safety &middot; Sustainability</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DISTRICT 03 — PROJECTS ===== -->
+  <section class="district district-projects" id="projects" data-district="3">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="projects.district">03 — PROJECTS</span></div>
+    <div class="section-heading">
+      <h2 data-i18n="projects.heading">Selected Developments</h2>
+      <p data-i18n="projects.sub">A survey of megaprojects currently shaping the Kingdom's skyline.</p>
+    </div>
+    <div class="projects-grid" id="projectsGrid">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <!-- ===== DISTRICT 04 — SERVICES ===== -->
+  <section class="district district-services" id="services" data-district="4">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="services.district">04 — CAPABILITIES</span></div>
+    <div class="section-heading">
+      <h2 data-i18n="services.heading">Our Services</h2>
+      <p data-i18n="services.sub">BASMA AHED combines expertise across every service area to deliver integrated, seamless project execution.</p>
+    </div>
+    <div class="services-grid" id="servicesGrid">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <!-- ===== DISTRICT 05 — STATS ===== -->
+  <section class="district district-stats" id="stats" data-district="5">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="impact.district">05 — IMPACT</span></div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number" data-count="2500">0</span>
+        <span class="stat-suffix">+</span>
+        <span class="stat-label" data-i18n="stats.projects">Projects Completed</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-count="200">0</span>
+        <span class="stat-suffix">+</span>
+        <span class="stat-label" data-i18n="stats.contracts">Major Contracts</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-count="100">0</span>
+        <span class="stat-suffix">%</span>
+        <span class="stat-label" data-i18n="stats.satisfaction">Satisfaction Rate</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-count="24">0</span>
+        <span class="stat-suffix">/7</span>
+        <span class="stat-label" data-i18n="stats.support">Support Team</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DISTRICT 06 — CONTACT / FOOTER ===== -->
+  <section class="district district-contact" id="contact" data-district="6">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="contact.district">06 — CONTACT</span></div>
+    <div class="contact-grid">
+      <div class="contact-left">
+        <h2 data-i18n-html="contact.heading">Get a free<br>quote today.</h2>
+        <p data-i18n="contact.desc">Tell us about your project, and our team will get back to you with a tailored proposal.</p>
+        <a href="mailto:info@basmaahed.com" class="contact-email">info@basmaahed.com</a>
+        <div class="contact-info">
+          <div><i class="fa-solid fa-phone"></i> +966 59 915 9462</div>
+          <div><i class="fa-solid fa-phone"></i> +966 50 846 8887</div>
+          <div><i class="fa-solid fa-envelope"></i> sales@basmaahed.com</div>
+          <div><i class="fa-solid fa-location-dot"></i> <span data-i18n="contact.coverage">Nationwide Coverage, Saudi Arabia</span></div>
+        </div>
+        <div class="contact-social">
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="fName" data-i18n="form.name">Name</label>
+            <input type="text" id="fName" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="fEmail" data-i18n="form.email">Email</label>
+            <input type="email" id="fEmail" name="email" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="fSubject" data-i18n="form.subject">Project Type</label>
+          <select id="fSubject" name="subject">
+            <option data-i18n="form.residential">Residential</option>
+            <option data-i18n="form.commercial">Commercial</option>
+            <option data-i18n="form.infrastructure">Infrastructure</option>
+            <option data-i18n="form.other">Other</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="fMessage" data-i18n="form.message">Message</label>
+          <textarea id="fMessage" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full"><span data-i18n="form.send">Send Message</span><i class="fa-solid fa-arrow-right"></i></button>
+        <div class="form-note" id="formNote"></div>
+      </form>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-map">
+        <div class="map-placeholder">
+          <div class="map-grid"></div>
+          <div class="map-pin"><i class="fa-solid fa-location-dot"></i></div>
+          <span class="map-tag" data-i18n="footer.mapTag">SERVING SAUDI ARABIA · NATIONWIDE COVERAGE</span>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <div class="footer-col">
+          <span class="logo-word small">BASMA <em>AHED</em></span>
+          <p data-i18n="footer.about">Leading general contracting company in Saudi Arabia specializing in construction, infrastructure and manpower supply.</p>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title" data-i18n="footer.quickLinks">Quick Links</span>
+          <a href="#home" data-i18n="footer.home">Home</a>
+          <a href="#services" data-i18n="nav.services">Services</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title" data-i18n="footer.legal">Legal</span>
+          <span class="footer-cr">C.R. No. 7038797556</span>
+          <span data-i18n="footer.servingKsa">Serving Saudi Arabia Nationwide</span>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="logo-word small">BASMA <em>AHED</em></span>
+        <span>&copy; <span id="year"></span> BASMA AHED. <span data-i18n="footer.rights">All rights reserved.</span></span>
+        <div class="footer-links">
+          <a href="#" data-i18n="footer.privacy">Privacy</a>
+          <a href="#" data-i18n="footer.terms">Terms</a>
+          <a href="#home" data-i18n="footer.backToTop">Back to top</a>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+</main>
+
+<!-- ============ PROJECT DETAIL PANEL ============ -->
+<div class="project-panel" id="projectPanel">
+  <button class="panel-close" id="panelClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+  <div class="panel-content" id="panelContent"></div>
+</div>
+
+
+<!-- ============ LOGIN MODAL ============ -->
+<div class="auth-modal" id="authModal" aria-hidden="true">
+  <div class="auth-backdrop" id="authBackdrop"></div>
+  <div class="auth-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button class="auth-close" id="authClose" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <div class="auth-icon"><i class="fa-solid fa-lock"></i></div>
+    <span class="auth-eyebrow">BASMA AHED / PORTAL</span>
+    <h2 id="authTitle" data-i18n="auth.title">Sign in to your account</h2>
+    <p id="authDesc" data-i18n="auth.desc">Access your requests and manage incoming messages.</p>
+    <form id="loginForm" class="auth-form">
+      <div class="form-field" id="nameField" hidden><label for="signupName" data-i18n="auth.name">Full name</label><input id="signupName" type="text" autocomplete="name"></div>
+      <div class="form-field"><label for="loginEmail" data-i18n="auth.email">Email</label><input id="loginEmail" type="email" required autocomplete="email"></div>
+      <div class="form-field"><label for="loginPassword" data-i18n="auth.password">Password</label><input id="loginPassword" type="password" required autocomplete="current-password" minlength="6"></div>
+      <button class="btn btn-primary btn-full" id="authSubmit" type="submit"><span data-i18n="auth.login">Login</span><i class="fa-solid fa-arrow-right"></i></button>
+      <button class="btn btn-ghost btn-full" id="authModeToggle" type="button" data-i18n="auth.createAccount">Create account</button>
+      <div class="auth-note" id="loginNote"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ REQUESTS DASHBOARD ============ -->
+<div class="requests-panel" id="requestsPanel" aria-hidden="true">
+  <div class="requests-backdrop" id="requestsBackdrop"></div>
+  <div class="requests-card">
+    <div class="requests-header">
+      <div><span class="auth-eyebrow">BASMA AHED / PORTAL</span><h2 data-i18n="requests.title">Requests</h2></div>
+      <div class="requests-actions"><button class="btn btn-ghost" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="auth.logout">Logout</span></button><button class="panel-close" id="requestsClose" type="button"><i class="fa-solid fa-xmark"></i></button></div>
+    </div>
+    <div class="requests-stats"><div><strong id="requestCount">0</strong><span data-i18n="requests.total">Total Requests</span></div><div><strong id="newRequestCount">0</strong><span data-i18n="requests.new">New Requests</span></div></div>
+    <div class="requests-list" id="requestsList"></div>
+  </div>
+</div>
+
+<!-- ============ SOUND TOGGLE ============ -->
+<button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
+  <i class="fa-solid fa-volume-xmark"></i>
+</button>
+
+<!-- ============ LIBRARIES (CDN) ============ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script src="js/three-scene.js"></script>
+<script src="js/ceo-mascot.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
