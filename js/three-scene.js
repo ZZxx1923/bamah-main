@@ -794,6 +794,17 @@
     return group;
   }
 
+  // Shared logo texture for truck decals (loaded once, reused on every truck)
+  let truckLogoTexture = null;
+  function getTruckLogoTexture() {
+    if (!truckLogoTexture) {
+      truckLogoTexture = new THREE.TextureLoader().load('assets/basma-ahed-logo.png');
+      if (THREE.sRGBEncoding) truckLogoTexture.encoding = THREE.sRGBEncoding;
+      truckLogoTexture.anisotropy = 4;
+    }
+    return truckLogoTexture;
+  }
+
   function buildTruck() {
     const group = new THREE.Group();
     const bodyMat = new THREE.MeshStandardMaterial({ color: COLORS.orange, roughness: 0.5, metalness: 0.4 });
@@ -804,6 +815,21 @@
     bed.position.set(-0.4, 1.3, 0);
     bed.castShadow = true;
     group.add(bed);
+
+    // Company logo decal on both sides of the bed
+    const logoTex = getTruckLogoTexture();
+    const logoW = 1.1, logoH = logoW * (1024 / 985);
+    const logoGeo = new THREE.PlaneGeometry(logoW, logoH);
+    const logoMatFront = new THREE.MeshBasicMaterial({ map: logoTex, transparent: true, depthWrite: false, toneMapped: false });
+    const logoFront = new THREE.Mesh(logoGeo, logoMatFront);
+    logoFront.position.set(-0.4, 1.3, 1.105);
+    group.add(logoFront);
+
+    const logoMatBack = new THREE.MeshBasicMaterial({ map: logoTex, transparent: true, depthWrite: false, toneMapped: false });
+    const logoBack = new THREE.Mesh(logoGeo, logoMatBack);
+    logoBack.position.set(-0.4, 1.3, -1.105);
+    logoBack.rotation.y = Math.PI;
+    group.add(logoBack);
 
     const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.6, 2.1), cabinMat);
     cabin.position.set(2.1, 1.3, 0);

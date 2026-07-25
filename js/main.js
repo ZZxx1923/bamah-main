@@ -120,8 +120,13 @@
             <rect stroke-width="2" stroke="#282828" fill="#282828" rx="1" height="11" width="4" y="81" x="193" />
             <rect stroke-width="3" stroke="#282828" fill="#DFDFDF" rx="2.5" height="90" width="121" y="1.5" x="6.5" />
             <rect stroke-width="2" stroke="#282828" fill="#DFDFDF" rx="2" height="4" width="6" y="84" x="1" />
-            <rect x="50" y="55" width="34" height="34" rx="7" fill="url(#basmaTruckLogoGrad)" />
-            <text x="67" y="77" text-anchor="middle" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="15" fill="#08090a">BA</text>
+            <g transform="translate(50,55) scale(0.2125)">
+              <rect x="0" y="0" width="160" height="160" rx="30" fill="url(#basmaTruckLogoGrad)"/>
+              <text x="80" y="93" text-anchor="middle" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="58" letter-spacing="1" fill="#08090a">BA</text>
+              <line x1="34" y1="118" x2="126" y2="118" stroke="#08090a" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+              <line x1="55" y1="118" x2="55" y2="106" stroke="#08090a" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+              <line x1="105" y1="118" x2="105" y2="109" stroke="#08090a" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+            </g>
             <text x="67" y="28" text-anchor="middle" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="17" letter-spacing=".5" fill="#282828">BASMA</text>
             <text x="67" y="46" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="12" letter-spacing="3" fill="#c9701a">AHED</text>
           </svg>
@@ -268,7 +273,7 @@
   const T = {
     en: {
       'nav.about': 'About', 'nav.projects': 'Projects', 'nav.services': 'Services', 'nav.contact': 'Contact',
-      'auth.login': 'Login', 'auth.title': 'Sign in to your account', 'auth.desc': 'Access your requests and manage incoming messages.', 'auth.portal': 'Portal', 'auth.email': 'Email', 'auth.password': 'Password', 'auth.logout': 'Logout', 'auth.invalid': 'Invalid email or password.', 'auth.demo': '',
+      'auth.login': 'Login', 'auth.title': 'Sign in to your account', 'auth.portal': 'Portal', 'auth.email': 'Email', 'auth.password': 'Password', 'auth.logout': 'Logout', 'auth.invalid': 'Invalid email or password.', 'auth.demo': '',
       'requests.title': 'Requests', 'requests.total': 'Total Requests', 'requests.new': 'New Requests', 'requests.empty': 'No requests yet. Messages submitted through the contact form will appear here.', 'requests.newBadge': 'New request', 'requests.status.new': 'Waiting', 'requests.status.in_progress': 'In progress', 'requests.status.completed': 'Completed', 'requests.delete': 'Delete', 'requests.deleteConfirm': 'Delete this request? This cannot be undone.', 'requests.filter.active': 'Active', 'requests.filter.completed': 'Completed', 'requests.filter.all': 'All', 'requests.emptyFiltered': 'No requests in this view.', 'loader.sending': 'Sending your request...', 'loader.signingIn': 'Signing you in...', 'loader.thanks': 'Thank you for trusting us! We will be in touch within 24 to 48 hours.',
       'nav.cta': 'Get a Quote',
       'hero.district': '00 — ARRIVAL',
@@ -312,7 +317,7 @@
     },
     ar: {
       'nav.about': 'من نحن', 'nav.projects': 'المشاريع', 'nav.services': 'خدماتنا', 'nav.contact': 'اتصل بنا',
-      'auth.login': 'تسجيل الدخول', 'auth.title': 'تسجيل الدخول إلى حسابك', 'auth.desc': 'الوصول إلى الطلبات وإدارة الرسائل الواردة.', 'auth.portal': 'البوابة', 'auth.email': 'البريد الإلكتروني', 'auth.password': 'كلمة المرور', 'auth.logout': 'تسجيل الخروج', 'auth.invalid': 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', 'auth.demo': '',
+      'auth.login': 'تسجيل الدخول', 'auth.title': 'تسجيل الدخول إلى حسابك', 'auth.portal': 'البوابة', 'auth.email': 'البريد الإلكتروني', 'auth.password': 'كلمة المرور', 'auth.logout': 'تسجيل الخروج', 'auth.invalid': 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', 'auth.demo': '',
       'requests.title': 'الطلبات', 'requests.total': 'إجمالي الطلبات', 'requests.new': 'الطلبات الجديدة', 'requests.empty': 'لا توجد طلبات حتى الآن. ستظهر الرسائل المرسلة من نموذج التواصل هنا.', 'requests.newBadge': 'طلب جديد', 'requests.status.new': 'في الانتظار', 'requests.status.in_progress': 'قيد التنفيذ', 'requests.status.completed': 'مكتمل', 'requests.delete': 'حذف', 'requests.deleteConfirm': 'هل تريد حذف هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.', 'requests.filter.active': 'النشطة', 'requests.filter.completed': 'المكتملة', 'requests.filter.all': 'الكل', 'requests.emptyFiltered': 'لا توجد طلبات في هذا العرض.', 'loader.sending': 'جارٍ إرسال طلبك...', 'loader.signingIn': 'جارٍ تسجيل الدخول...', 'loader.thanks': 'شكرًا لثقتك فينا! تم استلام طلبك بنجاح، وسنتواصل معك خلال 24 إلى 48 ساعة.',
       'nav.cta': 'اطلب عرض سعر',
       'hero.district': '٠٠ — البداية',
@@ -728,11 +733,9 @@
   const logoutBtn = document.getElementById('logoutBtn');
   const authSubmit = document.getElementById('authSubmit');
   const authTitle = document.getElementById('authTitle');
-  const authDesc = document.getElementById('authDesc');
 
   const setAuthMode = () => {
     authTitle.textContent = t('auth.title', 'Sign in to your account');
-    authDesc.textContent = t('auth.desc', 'Access your requests and manage incoming messages.');
     authSubmit.querySelector('span').textContent = t('auth.login', 'Login');
     loginNote.textContent = '';
   };
