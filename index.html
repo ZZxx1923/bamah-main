@@ -6,6 +6,25 @@
 <title>BASMA AHED &mdash; General Contracting Company</title>
 <meta name="description" content="BASMA AHED &mdash; Leading general contracting company in Saudi Arabia. Construction, infrastructure, manpower supply and materials trading, aligned with Vision 2030.">
 
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#08090a">
+
+<!-- Open Graph / Social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="BASMA AHED — General Contracting Company">
+<meta property="og:description" content="Leading general contracting company in Saudi Arabia. Construction, infrastructure, manpower supply and materials trading, aligned with Vision 2030.">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta property="og:locale" content="ar_SA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BASMA AHED — General Contracting Company">
+<meta name="twitter:description" content="Leading general contracting company in Saudi Arabia. Construction, infrastructure, manpower supply and materials trading.">
+<meta name="twitter:image" content="assets/og-image.jpg">
+
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,6 +78,7 @@
       <li><a href="#about" data-nav data-i18n="nav.about">About</a></li>
       <li><a href="#projects" data-nav data-i18n="nav.projects">Projects</a></li>
       <li><a href="#services" data-nav data-i18n="nav.services">Services</a></li>
+      <li><a href="#estimate" data-nav data-i18n="nav.estimate">Get Estimate</a></li>
       <li><a href="#contact" data-nav data-i18n="nav.contact">Contact</a></li>
     </ul>
     <a href="#contact" class="nav-cta" data-i18n="nav.cta">Get a Quote</a>
@@ -74,6 +94,7 @@
     <a href="#about" data-nav data-i18n="nav.about">About</a>
     <a href="#projects" data-nav data-i18n="nav.projects">Projects</a>
     <a href="#services" data-nav data-i18n="nav.services">Services</a>
+    <a href="#estimate" data-nav data-i18n="nav.estimate">Get Estimate</a>
     <a href="#contact" data-nav data-i18n="nav.contact">Contact</a>
     <button class="lang-toggle" id="langToggleMobile" type="button" aria-label="Toggle language">
       <span class="lang-en active">EN</span><span class="lang-sep">/</span><span class="lang-ar">AR</span>
@@ -220,9 +241,93 @@
     </div>
   </section>
 
-  <!-- ===== DISTRICT 06 — CONTACT / FOOTER ===== -->
-  <section class="district district-contact" id="contact" data-district="6">
-    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="contact.district">06 — CONTACT</span></div>
+  <!-- ===== DISTRICT 06 — WHY US / TRUST ===== -->
+  <section class="district district-whyus" id="whyus" data-district="6">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="whyus.district">06 — TRUST</span></div>
+    <div class="section-heading">
+      <h2 data-i18n="whyus.heading">Why Clients Choose Us</h2>
+      <p data-i18n="whyus.sub">A registered, accountable partner built for the Kingdom&rsquo;s largest projects.</p>
+    </div>
+    <div class="whyus-grid">
+      <div class="whyus-card" data-reveal>
+        <i class="fa-solid fa-file-shield"></i>
+        <h3 data-i18n="whyus.cr.title">Licensed &amp; Registered</h3>
+        <p data-i18n="whyus.cr.desc">Fully licensed general contractor, C.R. No. 7038797556.</p>
+      </div>
+      <div class="whyus-card" data-reveal>
+        <i class="fa-solid fa-map-location-dot"></i>
+        <h3 data-i18n="whyus.coverage.title">Nationwide Coverage</h3>
+        <p data-i18n="whyus.coverage.desc">Delivering projects across every region of Saudi Arabia.</p>
+      </div>
+      <div class="whyus-card" data-reveal>
+        <i class="fa-solid fa-diagram-project"></i>
+        <h3 data-i18n="whyus.vision.title">Vision 2030 Aligned</h3>
+        <p data-i18n="whyus.vision.desc">Supporting the Kingdom&rsquo;s giga-projects and infrastructure goals.</p>
+      </div>
+      <div class="whyus-card" data-reveal>
+        <i class="fa-solid fa-headset"></i>
+        <h3 data-i18n="whyus.support.title">24/7 Dedicated Support</h3>
+        <p data-i18n="whyus.support.desc">A responsive team, from first inquiry to project handover.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DISTRICT 07 — QUICK ESTIMATE WIZARD ===== -->
+  <section class="district district-estimate" id="estimate" data-district="7">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="estimate.district">07 — ESTIMATE</span></div>
+    <div class="section-heading">
+      <h2 data-i18n="estimate.heading">Get a Quick Project Assessment</h2>
+      <p data-i18n="estimate.sub">Answer three quick questions and our team will prepare a tailored response.</p>
+    </div>
+    <div class="estimate-wizard" id="estimateWizard" data-step="1">
+      <div class="estimate-progress"><span class="estimate-progress-bar" id="estimateProgress"></span></div>
+
+      <div class="estimate-step is-active" data-step-panel="1">
+        <span class="estimate-step-label" data-i18n="estimate.step1">STEP 1 — PROJECT TYPE</span>
+        <div class="estimate-options" data-estimate-group="type">
+          <button type="button" class="estimate-option" data-value="Residential"><i class="fa-solid fa-house"></i><span data-i18n="form.residential">Residential</span></button>
+          <button type="button" class="estimate-option" data-value="Commercial"><i class="fa-solid fa-building"></i><span data-i18n="form.commercial">Commercial</span></button>
+          <button type="button" class="estimate-option" data-value="Infrastructure"><i class="fa-solid fa-road"></i><span data-i18n="form.infrastructure">Infrastructure</span></button>
+          <button type="button" class="estimate-option" data-value="Manpower Supply"><i class="fa-solid fa-people-group"></i><span data-i18n="estimate.manpower">Manpower Supply</span></button>
+        </div>
+      </div>
+
+      <div class="estimate-step" data-step-panel="2">
+        <span class="estimate-step-label" data-i18n="estimate.step2">STEP 2 — PROJECT SCALE</span>
+        <div class="estimate-options" data-estimate-group="scale">
+          <button type="button" class="estimate-option" data-value="Small"><i class="fa-solid fa-seedling"></i><span data-i18n="estimate.scale.small">Small (under 10,000 m²)</span></button>
+          <button type="button" class="estimate-option" data-value="Medium"><i class="fa-solid fa-layer-group"></i><span data-i18n="estimate.scale.medium">Medium (10,000&ndash;100,000 m²)</span></button>
+          <button type="button" class="estimate-option" data-value="Large"><i class="fa-solid fa-city"></i><span data-i18n="estimate.scale.large">Large (100,000 m²&ndash;1M m²)</span></button>
+          <button type="button" class="estimate-option" data-value="Mega"><i class="fa-solid fa-earth-asia"></i><span data-i18n="estimate.scale.mega">Mega (over 1M m²)</span></button>
+        </div>
+      </div>
+
+      <div class="estimate-step" data-step-panel="3">
+        <span class="estimate-step-label" data-i18n="estimate.step3">STEP 3 — TIMELINE</span>
+        <div class="estimate-options" data-estimate-group="timeline">
+          <button type="button" class="estimate-option" data-value="ASAP"><i class="fa-solid fa-bolt"></i><span data-i18n="estimate.time.asap">As soon as possible</span></button>
+          <button type="button" class="estimate-option" data-value="1-3 months"><i class="fa-regular fa-calendar"></i><span data-i18n="estimate.time.short">1&ndash;3 months</span></button>
+          <button type="button" class="estimate-option" data-value="3-6 months"><i class="fa-regular fa-calendar-days"></i><span data-i18n="estimate.time.mid">3&ndash;6 months</span></button>
+          <button type="button" class="estimate-option" data-value="Planning stage"><i class="fa-solid fa-lightbulb"></i><span data-i18n="estimate.time.planning">Still planning</span></button>
+        </div>
+      </div>
+
+      <div class="estimate-step" data-step-panel="result">
+        <div class="estimate-result">
+          <i class="fa-solid fa-circle-check"></i>
+          <h3 data-i18n="estimate.result.title">Got it — here&rsquo;s a snapshot of your project</h3>
+          <div class="estimate-summary" id="estimateSummary"></div>
+          <p data-i18n="estimate.result.desc">Send this to our team and we&rsquo;ll follow up with a tailored proposal within 24&ndash;48 hours.</p>
+          <button type="button" class="btn btn-primary" id="estimateSend"><span data-i18n="estimate.result.cta">Send to Our Team</span><i class="fa-solid fa-arrow-right"></i></button>
+          <button type="button" class="estimate-restart" id="estimateRestart"><i class="fa-solid fa-rotate-left"></i> <span data-i18n="estimate.restart">Start over</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DISTRICT 08 — CONTACT / FOOTER ===== -->
+  <section class="district district-contact" id="contact" data-district="8">
+    <div class="district-label"><span>DISTRICT</span><span class="district-num" data-i18n="contact.district">08 — CONTACT</span></div>
     <div class="contact-grid">
       <div class="contact-left">
         <h2 data-i18n-html="contact.heading">Get a free<br>quote today.</h2>
@@ -354,6 +459,12 @@
 <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
   <i class="fa-solid fa-volume-xmark"></i>
 </button>
+
+<!-- ============ WHATSAPP FLOATING BUTTON ============ -->
+<a class="whatsapp-btn" href="https://wa.me/966599159462" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat with us on WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+  <span class="whatsapp-ping"></span>
+</a>
 
 <!-- ============ LIBRARIES (CDN) ============ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

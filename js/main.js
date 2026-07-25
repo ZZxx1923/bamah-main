@@ -272,7 +272,7 @@
      ========================================================= */
   const T = {
     en: {
-      'nav.about': 'About', 'nav.projects': 'Projects', 'nav.services': 'Services', 'nav.contact': 'Contact',
+      'nav.about': 'About', 'nav.projects': 'Projects', 'nav.services': 'Services', 'nav.estimate': 'Get Estimate', 'nav.contact': 'Contact',
       'auth.login': 'Login', 'auth.title': 'Sign in to your account', 'auth.portal': 'Portal', 'auth.email': 'Email', 'auth.password': 'Password', 'auth.logout': 'Logout', 'auth.invalid': 'Invalid email or password.', 'auth.demo': '',
       'requests.title': 'Requests', 'requests.total': 'Total Requests', 'requests.new': 'New Requests', 'requests.empty': 'No requests yet. Messages submitted through the contact form will appear here.', 'requests.newBadge': 'New request', 'requests.status.new': 'Waiting', 'requests.status.in_progress': 'In progress', 'requests.status.completed': 'Completed', 'requests.delete': 'Delete', 'requests.deleteConfirm': 'Delete this request? This cannot be undone.', 'requests.filter.active': 'Active', 'requests.filter.completed': 'Completed', 'requests.filter.all': 'All', 'requests.emptyFiltered': 'No requests in this view.', 'loader.sending': 'Sending your request...', 'loader.signingIn': 'Signing you in...', 'loader.thanks': 'Thank you for trusting us! We will be in touch within 24 to 48 hours.',
       'nav.cta': 'Get a Quote',
@@ -299,7 +299,19 @@
       'services.district': '04 — CAPABILITIES', 'services.heading': 'Our Services',
       'services.sub': 'BASMA AHED combines expertise across every service area to deliver integrated, seamless project execution.',
       'impact.district': '05 — IMPACT',
-      'contact.district': '06 — CONTACT',
+      'whyus.district': '06 — TRUST', 'whyus.heading': 'Why Clients Choose Us', 'whyus.sub': 'A registered, accountable partner built for the Kingdom\u2019s largest projects.',
+      'whyus.cr.title': 'Licensed & Registered', 'whyus.cr.desc': 'Fully licensed general contractor, C.R. No. 7038797556.',
+      'whyus.coverage.title': 'Nationwide Coverage', 'whyus.coverage.desc': 'Delivering projects across every region of Saudi Arabia.',
+      'whyus.vision.title': 'Vision 2030 Aligned', 'whyus.vision.desc': 'Supporting the Kingdom\u2019s giga-projects and infrastructure goals.',
+      'whyus.support.title': '24/7 Dedicated Support', 'whyus.support.desc': 'A responsive team, from first inquiry to project handover.',
+      'estimate.district': '07 — ESTIMATE', 'estimate.heading': 'Get a Quick Project Assessment', 'estimate.sub': 'Answer three quick questions and our team will prepare a tailored response.',
+      'estimate.manpower': 'Manpower Supply',
+      'estimate.step1': 'STEP 1 — PROJECT TYPE', 'estimate.step2': 'STEP 2 — PROJECT SCALE', 'estimate.step3': 'STEP 3 — TIMELINE',
+      'estimate.scale.small': 'Small (under 10,000 m²)', 'estimate.scale.medium': 'Medium (10,000–100,000 m²)', 'estimate.scale.large': 'Large (100,000 m²–1M m²)', 'estimate.scale.mega': 'Mega (over 1M m²)',
+      'estimate.time.asap': 'As soon as possible', 'estimate.time.short': '1–3 months', 'estimate.time.mid': '3–6 months', 'estimate.time.planning': 'Still planning',
+      'estimate.result.title': 'Got it — here\u2019s a snapshot of your project', 'estimate.result.desc': 'Send this to our team and we\u2019ll follow up with a tailored proposal within 24–48 hours.', 'estimate.result.cta': 'Send to Our Team', 'estimate.restart': 'Start over',
+      'estimate.summary.type': 'Project type', 'estimate.summary.scale': 'Scale', 'estimate.summary.timeline': 'Timeline',
+      'contact.district': '08 — CONTACT',
       'contact.heading': 'Get a free<br>quote today.',
       'contact.desc': 'Tell us about your project, and our team will get back to you with a tailored proposal.',
       'contact.coverage': 'Nationwide Coverage, Saudi Arabia',
@@ -316,7 +328,7 @@
       'meta.desc': 'BASMA AHED — Leading general contracting company in Saudi Arabia. Construction, infrastructure, manpower supply and materials trading, aligned with Vision 2030.',
     },
     ar: {
-      'nav.about': 'من نحن', 'nav.projects': 'المشاريع', 'nav.services': 'خدماتنا', 'nav.contact': 'اتصل بنا',
+      'nav.about': 'من نحن', 'nav.projects': 'المشاريع', 'nav.services': 'خدماتنا', 'nav.estimate': 'قيّم مشروعك', 'nav.contact': 'اتصل بنا',
       'auth.login': 'تسجيل الدخول', 'auth.title': 'تسجيل الدخول إلى حسابك', 'auth.portal': 'البوابة', 'auth.email': 'البريد الإلكتروني', 'auth.password': 'كلمة المرور', 'auth.logout': 'تسجيل الخروج', 'auth.invalid': 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', 'auth.demo': '',
       'requests.title': 'الطلبات', 'requests.total': 'إجمالي الطلبات', 'requests.new': 'الطلبات الجديدة', 'requests.empty': 'لا توجد طلبات حتى الآن. ستظهر الرسائل المرسلة من نموذج التواصل هنا.', 'requests.newBadge': 'طلب جديد', 'requests.status.new': 'في الانتظار', 'requests.status.in_progress': 'قيد التنفيذ', 'requests.status.completed': 'مكتمل', 'requests.delete': 'حذف', 'requests.deleteConfirm': 'هل تريد حذف هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.', 'requests.filter.active': 'النشطة', 'requests.filter.completed': 'المكتملة', 'requests.filter.all': 'الكل', 'requests.emptyFiltered': 'لا توجد طلبات في هذا العرض.', 'loader.sending': 'جارٍ إرسال طلبك...', 'loader.signingIn': 'جارٍ تسجيل الدخول...', 'loader.thanks': 'شكرًا لثقتك فينا! تم استلام طلبك بنجاح، وسنتواصل معك خلال 24 إلى 48 ساعة.',
       'nav.cta': 'اطلب عرض سعر',
@@ -343,7 +355,19 @@
       'services.district': '٠٤ — القدرات', 'services.heading': 'خدماتنا',
       'services.sub': 'تجمع بصمة عهد خبراتها في جميع مجالات الخدمة لتقديم تنفيذ متكامل وسلس للمشاريع.',
       'impact.district': '٠٥ — الأثر',
-      'contact.district': '٠٦ — التواصل',
+      'whyus.district': '٠٦ — الثقة', 'whyus.heading': 'لماذا يختارنا عملاؤنا', 'whyus.sub': 'شريك موثّق ومسؤول، مبني لخدمة أكبر مشاريع المملكة.',
+      'whyus.cr.title': 'مرخّصة وموثّقة', 'whyus.cr.desc': 'مقاول عام مرخّص بالكامل، سجل تجاري رقم 7038797556.',
+      'whyus.coverage.title': 'تغطية شاملة للمملكة', 'whyus.coverage.desc': 'ننفّذ المشاريع في جميع مناطق المملكة العربية السعودية.',
+      'whyus.vision.title': 'متوافقون مع رؤية 2030', 'whyus.vision.desc': 'ندعم مشاريع المملكة العملاقة وأهداف البنية التحتية.',
+      'whyus.support.title': 'دعم متواصل على مدار الساعة', 'whyus.support.desc': 'فريق سريع الاستجابة، من أول استفسار وحتى تسليم المشروع.',
+      'estimate.district': '٠٧ — التقدير', 'estimate.heading': 'احصل على تقييم سريع لمشروعك', 'estimate.sub': 'أجب عن ثلاثة أسئلة سريعة وسيجهّز فريقنا ردًا مخصصًا لك.',
+      'estimate.manpower': 'توريد العمالة',
+      'estimate.step1': 'الخطوة ١ — نوع المشروع', 'estimate.step2': 'الخطوة ٢ — حجم المشروع', 'estimate.step3': 'الخطوة ٣ — الجدول الزمني',
+      'estimate.scale.small': 'صغير (أقل من 10,000 م²)', 'estimate.scale.medium': 'متوسط (10,000–100,000 م²)', 'estimate.scale.large': 'كبير (100,000 م²–مليون م²)', 'estimate.scale.mega': 'عملاق (أكثر من مليون م²)',
+      'estimate.time.asap': 'في أقرب وقت ممكن', 'estimate.time.short': '1–3 أشهر', 'estimate.time.mid': '3–6 أشهر', 'estimate.time.planning': 'لا زلت في مرحلة التخطيط',
+      'estimate.result.title': 'تم — هذه لمحة عن مشروعك', 'estimate.result.desc': 'أرسل هذا لفريقنا وسنتواصل معك بعرض مخصص خلال 24 إلى 48 ساعة.', 'estimate.result.cta': 'إرسال لفريقنا', 'estimate.restart': 'البدء من جديد',
+      'estimate.summary.type': 'نوع المشروع', 'estimate.summary.scale': 'الحجم', 'estimate.summary.timeline': 'الجدول الزمني',
+      'contact.district': '٠٨ — التواصل',
       'contact.heading': 'احصل على عرض سعر<br>مجاني اليوم.',
       'contact.desc': 'أخبرنا عن مشروعك، وسيتواصل معك فريقنا بعرض مخصص يلبي احتياجاتك.',
       'contact.coverage': 'تغطية شاملة لكافة أنحاء المملكة العربية السعودية',
@@ -704,6 +728,7 @@
   revealOnScroll('.mvv-card');
   revealOnScroll('.contact-left > *', { stagger: 0.08 });
   revealOnScroll('.contact-form');
+  revealOnScroll('.whyus-card', { stagger: 0.08 });
 
   /* =========================================================
      SHARED SUPABASE CONTACT + AUTH
@@ -880,6 +905,82 @@
     form.reset();
     if (user) await updateRequestDashboard();
   });
+
+  /* =========================================================
+     QUICK ESTIMATE WIZARD
+     3-step lead qualifier: type -> scale -> timeline -> summary,
+     then hands the answers straight to the contact form.
+     ========================================================= */
+  (function initEstimateWizard() {
+    const wizard = document.getElementById('estimateWizard');
+    if (!wizard) return;
+    const progressBar = document.getElementById('estimateProgress');
+    const panels = wizard.querySelectorAll('[data-step-panel]');
+    const answers = { type: null, scale: null, timeline: null };
+    const totalSteps = 3;
+    let step = 1;
+
+    function showStep(n) {
+      step = n;
+      panels.forEach(p => p.classList.toggle('is-active', p.dataset.stepPanel === String(n)));
+      const pct = n === 'result' ? 100 : ((n - 1) / totalSteps) * 100;
+      progressBar.style.width = pct + '%';
+    }
+
+    function renderSummary() {
+      const summaryEl = document.getElementById('estimateSummary');
+      const rows = [
+        [t('estimate.summary.type', 'Project type'), answers.type],
+        [t('estimate.summary.scale', 'Scale'), answers.scale],
+        [t('estimate.summary.timeline', 'Timeline'), answers.timeline],
+      ];
+      summaryEl.innerHTML = rows.map(([label, val]) => `<div class="estimate-summary-row"><span>${escapeHtml(label)}</span><strong>${escapeHtml(val || '—')}</strong></div>`).join('');
+    }
+
+    wizard.querySelectorAll('[data-estimate-group]').forEach(group => {
+      const key = group.dataset.estimateGroup;
+      group.querySelectorAll('.estimate-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          group.querySelectorAll('.estimate-option').forEach(b => b.classList.remove('is-selected'));
+          btn.classList.add('is-selected');
+          answers[key] = btn.dataset.value;
+          setTimeout(() => {
+            if (key === 'type') showStep(2);
+            else if (key === 'scale') showStep(3);
+            else if (key === 'timeline') { renderSummary(); showStep('result'); }
+          }, 220);
+        });
+      });
+    });
+
+    document.getElementById('estimateRestart').addEventListener('click', () => {
+      answers.type = answers.scale = answers.timeline = null;
+      wizard.querySelectorAll('.estimate-option').forEach(b => b.classList.remove('is-selected'));
+      showStep(1);
+    });
+
+    document.getElementById('estimateSend').addEventListener('click', () => {
+      const fSubject = document.getElementById('fSubject');
+      const fMessage = document.getElementById('fMessage');
+      if (fSubject) {
+        const optionMatch = Array.from(fSubject.options).find(o => o.value === answers.type || o.textContent.trim() === answers.type);
+        if (optionMatch) fSubject.value = optionMatch.value;
+      }
+      if (fMessage) {
+        const lines = [
+          `${t('estimate.summary.type','Project type')}: ${answers.type || '—'}`,
+          `${t('estimate.summary.scale','Scale')}: ${answers.scale || '—'}`,
+          `${t('estimate.summary.timeline','Timeline')}: ${answers.timeline || '—'}`,
+        ];
+        fMessage.value = lines.join('\n');
+      }
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+      const fName = document.getElementById('fName');
+      if (fName) setTimeout(() => fName.focus(), 500);
+    });
+
+    showStep(1);
+  })();
 
   loginOpen.addEventListener('click', async () => {
     const user = await getCurrentUser();

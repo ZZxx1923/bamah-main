@@ -739,6 +739,33 @@ html[dir="rtl"] .scroll-cue{ left:auto; right:40px; }
 html[dir="rtl"] .hud-bl{ left:auto; right:0; }
 html[dir="rtl"] .hud-br{ right:auto; left:0; }
 html[dir="rtl"] .sound-toggle{ right:auto; left:28px; }
+
+/* ============ WHATSAPP FLOATING BUTTON ============ */
+.whatsapp-btn{
+  position:fixed; bottom:28px; left:28px; z-index:90;
+  width:56px; height:56px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:#25D366; color:#08090a; font-size:26px;
+  box-shadow:0 10px 30px rgba(37,211,102,.35);
+  text-decoration:none; transition:transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.whatsapp-btn:hover{ transform:scale(1.08); box-shadow:0 14px 38px rgba(37,211,102,.5); }
+.whatsapp-btn:active{ transform:scale(.92); }
+.whatsapp-ping{
+  position:absolute; inset:0; border-radius:50%;
+  background:#25D366; opacity:.55;
+  animation:whatsapp-pulse 2.2s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes whatsapp-pulse{
+  0%{ transform:scale(1); opacity:.5; }
+  100%{ transform:scale(1.9); opacity:0; }
+}
+html[dir="rtl"] .whatsapp-btn{ left:auto; right:28px; }
+@media (max-width: 640px){
+  .whatsapp-btn{ width:50px; height:50px; font-size:23px; bottom:20px; left:16px; }
+  html[dir="rtl"] .whatsapp-btn{ left:auto; right:16px; }
+}
 html[dir="rtl"] .map-tag{ left:auto; right:16px; }
 html[dir="rtl"] .nav-links a::after{ left:auto; right:0; }
 
@@ -783,4 +810,60 @@ html[dir="rtl"] .contact-social{ direction:ltr; justify-content:flex-end; }
 }
 @media (max-width: 768px) {
   .nav-logo .logo-image { width: 48px; height: 48px; }
+}
+
+/* ============ WHY US / TRUST BADGES ============ */
+.whyus-grid{
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;
+}
+.whyus-card{
+  border:1px solid var(--glass-border); background:var(--glass-bg);
+  border-radius:18px; padding:30px 26px; transition:transform .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+}
+.whyus-card:hover{ transform:translateY(-4px); border-color:rgba(247,147,30,.35); background:var(--glass-bg-2); }
+.whyus-card i{ font-size:26px; color:var(--orange); margin-bottom:18px; display:block; }
+.whyus-card h3{ font-family:var(--font-display); font-size:17px; margin-bottom:10px; color:var(--white); }
+.whyus-card p{ font-size:14px; line-height:1.6; color:var(--concrete-lt); font-weight:300; }
+@media (max-width: 980px){ .whyus-grid{ grid-template-columns:repeat(2, 1fr); } }
+@media (max-width: 560px){ .whyus-grid{ grid-template-columns:1fr; } }
+
+/* ============ QUICK ESTIMATE WIZARD ============ */
+.estimate-wizard{
+  max-width:760px; border:1px solid var(--glass-border); background:var(--glass-bg);
+  border-radius:22px; padding:38px 34px; backdrop-filter:blur(var(--glass-blur));
+}
+.estimate-progress{ height:4px; border-radius:99px; background:rgba(244,244,241,.1); overflow:hidden; margin-bottom:32px; }
+.estimate-progress-bar{ display:block; height:100%; width:0%; background:var(--orange); transition:width .35s var(--ease); }
+.estimate-step{ display:none; }
+.estimate-step.is-active{ display:block; animation:estimateStepIn .35s var(--ease) both; }
+@keyframes estimateStepIn{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+.estimate-step-label{ display:block; font:600 11px var(--font-mono); letter-spacing:.14em; color:var(--orange); margin-bottom:18px; text-transform:uppercase; }
+.estimate-options{ display:grid; grid-template-columns:repeat(2, 1fr); gap:14px; }
+.estimate-option{
+  display:flex; align-items:center; gap:12px; text-align:start;
+  padding:18px 18px; border-radius:14px; border:1px solid var(--glass-border); background:rgba(244,244,241,.03);
+  color:var(--concrete-lt); font:15px var(--font-body); cursor:pointer; transition:all .22s var(--ease);
+}
+.estimate-option i{ color:var(--orange); font-size:16px; width:20px; text-align:center; flex-shrink:0; }
+.estimate-option:hover{ border-color:rgba(247,147,30,.4); background:rgba(247,147,30,.06); color:var(--white); }
+.estimate-option.is-selected{ border-color:var(--orange); background:rgba(247,147,30,.14); color:var(--white); }
+.estimate-result{ text-align:center; padding:8px 0; }
+.estimate-result > i{ font-size:38px; color:var(--orange); margin-bottom:14px; }
+.estimate-result h3{ font-family:var(--font-display); font-size:22px; margin-bottom:20px; color:var(--white); }
+.estimate-summary{ display:grid; gap:10px; max-width:420px; margin:0 auto 20px; }
+.estimate-summary-row{
+  display:flex; justify-content:space-between; gap:12px; padding:12px 16px;
+  border:1px solid var(--glass-border); border-radius:12px; background:rgba(244,244,241,.03); font-size:14px;
+}
+.estimate-summary-row span{ color:var(--concrete-lt); }
+.estimate-summary-row strong{ color:var(--white); font-weight:600; }
+.estimate-result p{ font-size:14px; color:var(--concrete-lt); font-weight:300; max-width:440px; margin:0 auto 24px; line-height:1.6; }
+.estimate-restart{
+  display:block; margin:16px auto 0; background:none; border:none; color:var(--concrete-lt);
+  font-size:13px; cursor:pointer; transition:color .2s ease;
+}
+.estimate-restart:hover{ color:var(--orange); }
+@media (max-width: 640px){
+  .estimate-wizard{ padding:26px 20px; }
+  .estimate-options{ grid-template-columns:1fr; }
 }
