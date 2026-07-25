@@ -1,3 +1,177 @@
+
+  /* Full-screen success message for submitted requests */
+  const successModalStyle = document.createElement('style');
+  successModalStyle.id = 'basma-success-modal-style';
+  successModalStyle.textContent = `
+    .basma-success-overlay {
+      position: fixed; inset: 0; z-index: 99999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; background: rgba(15, 23, 42, .62);
+      backdrop-filter: blur(8px);
+      opacity: 0; visibility: hidden;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+    .basma-success-overlay.is-visible { opacity: 1; visibility: visible; }
+    .basma-success-card {
+      width: min(520px, 100%); background: #fff; border-radius: 24px;
+      padding: 36px 30px 30px; text-align: center;
+      box-shadow: 0 24px 80px rgba(0,0,0,.22);
+      transform: translateY(18px) scale(.96);
+      transition: transform .3s cubic-bezier(.2,.8,.2,1);
+      direction: rtl;
+    }
+    .basma-success-overlay.is-visible .basma-success-card {
+      transform: translateY(0) scale(1);
+    }
+    .basma-success-icon {
+      width: 76px; height: 76px; margin: 0 auto 18px;
+      display: grid; place-items: center; border-radius: 50%;
+      background: #dcfce7; color: #16a34a; font-size: 38px;
+      font-weight: 800;
+    }
+    .basma-success-card h3 { margin: 0 0 12px; font-size: 25px; color: #0f172a; }
+    .basma-success-card p { margin: 0 auto 24px; max-width: 420px; line-height: 1.9; color: #475569; font-size: 16px; }
+    .basma-success-close {
+      width: 100%; border: 0; border-radius: 12px; padding: 13px 18px;
+      background: #16a34a; color: #fff; font-size: 16px; font-weight: 700;
+      cursor: pointer; transition: transform .2s ease, filter .2s ease;
+    }
+    .basma-success-close:hover { filter: brightness(.95); transform: translateY(-1px); }
+  `;
+  document.head.appendChild(successModalStyle);
+
+  const successOverlay = document.createElement('div');
+  successOverlay.id = 'basma-success-modal';
+  successOverlay.className = 'basma-success-overlay';
+  successOverlay.innerHTML = `
+    <div class="basma-success-card" role="dialog" aria-modal="true" aria-labelledby="basma-success-title">
+      <div class="basma-success-icon">✓</div>
+      <h3 id="basma-success-title">تم إرسال طلبك بنجاح</h3>
+      <p>شكرًا لتواصلك مع بصمة عهد. تم استلام رسالتك بنجاح، وسيتم التواصل معك خلال 24 إلى 48 ساعة.</p>
+      <button type="button" class="basma-success-close">حسنًا</button>
+    </div>
+  `;
+  document.body.appendChild(successOverlay);
+
+  const closeSuccessModal = () => {
+    successOverlay.classList.remove('is-visible');
+    document.body.style.overflow = '';
+  };
+  successOverlay.querySelector('.basma-success-close').addEventListener('click', closeSuccessModal);
+  successOverlay.addEventListener('click', (event) => {
+    if (event.target === successOverlay) closeSuccessModal();
+  });
+
+  window.showBasmaSuccessModal = () => {
+    successOverlay.classList.add('is-visible');
+    document.body.style.overflow = 'hidden';
+  };
+
+  /* ==========================================================================
+     BRANDED TRUCK LOADER — shown while a request is sending, and for 3s
+     right after a successful login.
+     ========================================================================== */
+  const loaderStyle = document.createElement('style');
+  loaderStyle.id = 'basma-loader-style';
+  loaderStyle.textContent = `
+    .basma-loader-overlay {
+      position: fixed; inset: 0; z-index: 100000;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 22px;
+      background: rgba(8, 9, 10, .82);
+      backdrop-filter: blur(10px);
+      opacity: 0; visibility: hidden;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+    .basma-loader-overlay.is-visible { opacity: 1; visibility: visible; }
+    .basma-loader-overlay .loader { width: fit-content; height: fit-content; display: flex; align-items: center; justify-content: center; }
+    .basma-loader-overlay .truckWrapper { width: 260px; height: 130px; display: flex; flex-direction: column; position: relative; align-items: center; justify-content: flex-end; overflow-x: hidden; }
+    .basma-loader-overlay .truckBody { width: 169px; height: fit-content; margin-bottom: 8px; animation: basmaTruckMotion 1s linear infinite; }
+    @keyframes basmaTruckMotion { 0% { transform: translateY(0px); } 50% { transform: translateY(3px); } 100% { transform: translateY(0px); } }
+    .basma-loader-overlay .truckTires { width: 169px; height: fit-content; display: flex; align-items: center; justify-content: space-between; padding: 0px 13px 0px 19px; position: absolute; bottom: 0; }
+    .basma-loader-overlay .truckTires svg { width: 31px; }
+    .basma-loader-overlay .road { width: 100%; height: 1.5px; background-color: #f4f4f1; position: relative; bottom: 0; align-self: flex-end; border-radius: 3px; }
+    .basma-loader-overlay .road::before { content: ""; position: absolute; width: 20px; height: 100%; background-color: #f4f4f1; right: -50%; border-radius: 3px; animation: basmaRoadMotion 1.4s linear infinite; border-left: 10px solid #08090a; }
+    .basma-loader-overlay .road::after { content: ""; position: absolute; width: 10px; height: 100%; background-color: #f4f4f1; right: -65%; border-radius: 3px; animation: basmaRoadMotion 1.4s linear infinite; border-left: 4px solid #08090a; }
+    .basma-loader-overlay .lampPost { position: absolute; bottom: 0; right: -90%; height: 90px; animation: basmaRoadMotion 1.4s linear infinite; }
+    @keyframes basmaRoadMotion { 0% { transform: translateX(0px); } 100% { transform: translateX(-350px); } }
+    .basma-loader-label { font: 600 13px/1.7 'JetBrains Mono', monospace; letter-spacing: .04em; color: #f7931e; text-align: center; max-width: 340px; padding: 0 20px; }
+  `;
+  document.head.appendChild(loaderStyle);
+
+  const loaderOverlay = document.createElement('div');
+  loaderOverlay.id = 'basma-loader-overlay';
+  loaderOverlay.className = 'basma-loader-overlay';
+  loaderOverlay.innerHTML = `
+    <div class="loader">
+      <div class="truckWrapper">
+        <div class="truckBody">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 198 93" class="trucksvg">
+            <defs>
+              <linearGradient id="basmaTruckLogoGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f7931e"/>
+                <stop offset="1" stop-color="#c9701a"/>
+              </linearGradient>
+            </defs>
+            <path stroke-width="3" stroke="#282828" fill="#F83D3D" d="M135 22.5H177.264C178.295 22.5 179.22 23.133 179.594 24.0939L192.33 56.8443C192.442 57.1332 192.5 57.4404 192.5 57.7504V89C192.5 90.3807 191.381 91.5 190 91.5H135C133.619 91.5 132.5 90.3807 132.5 89V25C132.5 23.6193 133.619 22.5 135 22.5Z" />
+            <path stroke-width="3" stroke="#282828" fill="#7D7C7C" d="M146 33.5H181.741C182.779 33.5 183.709 34.1415 184.078 35.112L190.538 52.112C191.16 53.748 189.951 55.5 188.201 55.5H146C144.619 55.5 143.5 54.3807 143.5 53V36C143.5 34.6193 144.619 33.5 146 33.5Z" />
+            <path stroke-width="2" stroke="#282828" fill="#282828" d="M150 65C150 65.39 149.763 65.8656 149.127 66.2893C148.499 66.7083 147.573 67 146.5 67C145.427 67 144.501 66.7083 143.873 66.2893C143.237 65.8656 143 65.39 143 65C143 64.61 143.237 64.1344 143.873 63.7107C144.501 63.2917 145.427 63 146.5 63C147.573 63 148.499 63.2917 149.127 63.7107C149.763 64.1344 150 64.61 150 65Z" />
+            <rect stroke-width="2" stroke="#282828" fill="#FFFCAB" rx="1" height="7" width="5" y="63" x="187" />
+            <rect stroke-width="2" stroke="#282828" fill="#282828" rx="1" height="11" width="4" y="81" x="193" />
+            <rect stroke-width="3" stroke="#282828" fill="#DFDFDF" rx="2.5" height="90" width="121" y="1.5" x="6.5" />
+            <rect stroke-width="2" stroke="#282828" fill="#DFDFDF" rx="2" height="4" width="6" y="84" x="1" />
+            <rect x="50" y="55" width="34" height="34" rx="7" fill="url(#basmaTruckLogoGrad)" />
+            <text x="67" y="77" text-anchor="middle" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="15" fill="#08090a">BA</text>
+            <text x="67" y="28" text-anchor="middle" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="17" letter-spacing=".5" fill="#282828">BASMA</text>
+            <text x="67" y="46" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="12" letter-spacing="3" fill="#c9701a">AHED</text>
+          </svg>
+        </div>
+        <div class="truckTires">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" class="tiresvg">
+            <circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5" cy="15" cx="15" />
+            <circle fill="#DFDFDF" r="7" cy="15" cx="15" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" class="tiresvg">
+            <circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5" cy="15" cx="15" />
+            <circle fill="#DFDFDF" r="7" cy="15" cx="15" />
+          </svg>
+        </div>
+        <div class="road"></div>
+        <svg xml:space="preserve" viewBox="0 0 453.459 453.459" xmlns="http://www.w3.org/2000/svg" fill="#f4f4f1" class="lampPost">
+          <path d="M252.882,0c-37.781,0-68.686,29.953-70.245,67.358h-6.917v8.954c-26.109,2.163-45.463,10.011-45.463,19.366h9.993
+      c-1.65,5.146-2.507,10.54-2.507,16.017c0,28.956,23.558,52.514,52.514,52.514c28.956,0,52.514-23.558,52.514-52.514
+      c0-5.478-0.856-10.872-2.506-16.017h9.992c0-9.354-19.352-17.204-45.463-19.366v-8.954h-6.149C200.189,38.779,223.924,16,252.882,16
+      c29.952,0,54.32,24.368,54.32,54.32c0,28.774-11.078,37.009-25.105,47.437c-17.444,12.968-37.216,27.667-37.216,78.884v113.914
+      h-0.797c-5.068,0-9.174,4.108-9.174,9.177c0,2.844,1.293,5.383,3.321,7.066c-3.432,27.933-26.851,95.744-8.226,115.459v11.202h45.75
+      v-11.202c18.625-19.715-4.794-87.527-8.227-115.459c2.029-1.683,3.322-4.223,3.322-7.066c0-5.068-4.107-9.177-9.176-9.177h-0.795
+      V196.641c0-43.174,14.942-54.283,30.762-66.043c14.793-10.997,31.559-23.461,31.559-60.277C323.202,31.545,291.656,0,252.882,0z
+      M232.77,111.694c0,23.442-19.071,42.514-42.514,42.514c-23.442,0-42.514-19.072-42.514-42.514c0-5.531,1.078-10.957,3.141-16.017
+      h78.747C231.693,100.736,232.77,106.162,232.77,111.694z" />
+        </svg>
+      </div>
+    </div>
+    <div class="basma-loader-label" id="basmaLoaderLabel">جارٍ الإرسال...</div>
+  `;
+  document.body.appendChild(loaderOverlay);
+
+  const basmaLoaderLabelEl = loaderOverlay.querySelector('#basmaLoaderLabel');
+
+  window.showBasmaLoader = (label) => {
+    if (label) basmaLoaderLabelEl.textContent = label;
+    loaderOverlay.classList.add('is-visible');
+    document.body.style.overflow = 'hidden';
+  };
+  window.hideBasmaLoader = () => {
+    loaderOverlay.classList.remove('is-visible');
+    document.body.style.overflow = '';
+  };
+  // Shows the loader for at least `minMs` milliseconds, even if the wrapped
+  // action finishes sooner, so it doesn't flash on screen too briefly.
+  window.showBasmaLoaderFor = (minMs, label) => {
+    window.showBasmaLoader(label);
+    return new Promise((resolve) => setTimeout(() => { window.hideBasmaLoader(); resolve(); }, minMs));
+  };
+
 /* ==========================================================================
    BASMA AHED — main.js
    Preloader, smooth scroll, scroll-driven 3D camera, content rendering,
@@ -94,8 +268,8 @@
   const T = {
     en: {
       'nav.about': 'About', 'nav.projects': 'Projects', 'nav.services': 'Services', 'nav.contact': 'Contact',
-      'auth.login': 'Login', 'auth.title': 'Sign in to your account', 'auth.desc': 'Access your requests and manage incoming messages.', 'auth.signupTitle': 'Create your account', 'auth.signupDesc': 'Create an account to track your requests.', 'auth.signup': 'Create account', 'auth.createAccount': 'Create account', 'auth.haveAccount': 'Already have an account? Login', 'auth.portal': 'Portal', 'auth.email': 'Email', 'auth.password': 'Password', 'auth.logout': 'Logout', 'auth.invalid': 'Invalid email or password.', 'auth.demo': '',
-      'requests.title': 'Requests', 'requests.total': 'Total Requests', 'requests.new': 'New Requests', 'requests.empty': 'No requests yet. Messages submitted through the contact form will appear here.', 'requests.newBadge': 'New request',
+      'auth.login': 'Login', 'auth.title': 'Sign in to your account', 'auth.desc': 'Access your requests and manage incoming messages.', 'auth.portal': 'Portal', 'auth.email': 'Email', 'auth.password': 'Password', 'auth.logout': 'Logout', 'auth.invalid': 'Invalid email or password.', 'auth.demo': '',
+      'requests.title': 'Requests', 'requests.total': 'Total Requests', 'requests.new': 'New Requests', 'requests.empty': 'No requests yet. Messages submitted through the contact form will appear here.', 'requests.newBadge': 'New request', 'requests.status.new': 'Waiting', 'requests.status.in_progress': 'In progress', 'requests.status.completed': 'Completed', 'requests.delete': 'Delete', 'requests.deleteConfirm': 'Delete this request? This cannot be undone.', 'requests.filter.active': 'Active', 'requests.filter.completed': 'Completed', 'requests.filter.all': 'All', 'requests.emptyFiltered': 'No requests in this view.', 'loader.sending': 'Sending your request...', 'loader.signingIn': 'Signing you in...', 'loader.thanks': 'Thank you for trusting us! We will be in touch within 24 to 48 hours.',
       'nav.cta': 'Get a Quote',
       'hero.district': '00 — ARRIVAL',
       'hero.eyebrow': 'GENERAL CONTRACTING · SAUDI ARABIA',
@@ -138,8 +312,8 @@
     },
     ar: {
       'nav.about': 'من نحن', 'nav.projects': 'المشاريع', 'nav.services': 'خدماتنا', 'nav.contact': 'اتصل بنا',
-      'auth.login': 'تسجيل الدخول', 'auth.title': 'تسجيل الدخول إلى حسابك', 'auth.desc': 'الوصول إلى الطلبات وإدارة الرسائل الواردة.', 'auth.signupTitle': 'إنشاء حساب', 'auth.signupDesc': 'أنشئ حسابًا لمتابعة طلباتك.', 'auth.signup': 'إنشاء حساب', 'auth.createAccount': 'إنشاء حساب', 'auth.haveAccount': 'لديك حساب بالفعل؟ تسجيل الدخول', 'auth.portal': 'البوابة', 'auth.email': 'البريد الإلكتروني', 'auth.password': 'كلمة المرور', 'auth.logout': 'تسجيل الخروج', 'auth.invalid': 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', 'auth.demo': '',
-      'requests.title': 'الطلبات', 'requests.total': 'إجمالي الطلبات', 'requests.new': 'الطلبات الجديدة', 'requests.empty': 'لا توجد طلبات حتى الآن. ستظهر الرسائل المرسلة من نموذج التواصل هنا.', 'requests.newBadge': 'طلب جديد',
+      'auth.login': 'تسجيل الدخول', 'auth.title': 'تسجيل الدخول إلى حسابك', 'auth.desc': 'الوصول إلى الطلبات وإدارة الرسائل الواردة.', 'auth.portal': 'البوابة', 'auth.email': 'البريد الإلكتروني', 'auth.password': 'كلمة المرور', 'auth.logout': 'تسجيل الخروج', 'auth.invalid': 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', 'auth.demo': '',
+      'requests.title': 'الطلبات', 'requests.total': 'إجمالي الطلبات', 'requests.new': 'الطلبات الجديدة', 'requests.empty': 'لا توجد طلبات حتى الآن. ستظهر الرسائل المرسلة من نموذج التواصل هنا.', 'requests.newBadge': 'طلب جديد', 'requests.status.new': 'في الانتظار', 'requests.status.in_progress': 'قيد التنفيذ', 'requests.status.completed': 'مكتمل', 'requests.delete': 'حذف', 'requests.deleteConfirm': 'هل تريد حذف هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.', 'requests.filter.active': 'النشطة', 'requests.filter.completed': 'المكتملة', 'requests.filter.all': 'الكل', 'requests.emptyFiltered': 'لا توجد طلبات في هذا العرض.', 'loader.sending': 'جارٍ إرسال طلبك...', 'loader.signingIn': 'جارٍ تسجيل الدخول...', 'loader.thanks': 'شكرًا لثقتك فينا! تم استلام طلبك بنجاح، وسنتواصل معك خلال 24 إلى 48 ساعة.',
       'nav.cta': 'اطلب عرض سعر',
       'hero.district': '٠٠ — البداية',
       'hero.eyebrow': 'مقاولات عامة · المملكة العربية السعودية',
@@ -180,6 +354,15 @@
       'meta.title': 'بصمة عهد — شركة مقاولات عامة',
       'meta.desc': 'بصمة عهد — شركة مقاولات عامة رائدة في المملكة العربية السعودية. إنشاءات وبنية تحتية وتوفير قوى عاملة وتجارة مواد بناء، بما يتماشى مع رؤية 2030.',
     },
+  };
+
+  // Global translation helper used by authentication, requests, forms, and UI messages.
+  // The previous version called t(...) in several functions without defining it,
+  // which caused: ReferenceError: t is not defined.
+  const t = (key, fallback = key) => {
+    const translations = T[currentLang] || T.en || {};
+    const value = translations[key];
+    return value !== undefined && value !== null && value !== '' ? value : fallback;
   };
 
   let currentLang = localStorage.getItem('basma-lang') || 'en';
@@ -537,30 +720,27 @@
   const loginForm = document.getElementById('loginForm');
   const loginNote = document.getElementById('loginNote');
   const requestsList = document.getElementById('requestsList');
+  const requestsNote = document.getElementById('requestsNote');
+  const requestsFilters = document.getElementById('requestsFilters');
+  let requestsFilter = 'active';
   const requestCount = document.getElementById('requestCount');
   const newRequestCount = document.getElementById('newRequestCount');
   const logoutBtn = document.getElementById('logoutBtn');
-  const authModeToggle = document.getElementById('authModeToggle');
   const authSubmit = document.getElementById('authSubmit');
   const authTitle = document.getElementById('authTitle');
   const authDesc = document.getElementById('authDesc');
-  let authMode = 'login';
 
-  const t = (key, fallback) => (T[currentLang] && T[currentLang][key]) || fallback;
-  const setAuthMode = (mode) => {
-    authMode = mode;
-    const signup = mode === 'signup';
-    authTitle.textContent = signup ? t('auth.signupTitle', 'Create your account') : t('auth.title', 'Sign in to your account');
-    authDesc.textContent = signup ? t('auth.signupDesc', 'Create an account to track your requests.') : t('auth.desc', 'Access your requests and manage incoming messages.');
-    authSubmit.querySelector('span').textContent = signup ? t('auth.signup', 'Create account') : t('auth.login', 'Login');
-    authModeToggle.textContent = signup ? t('auth.haveAccount', 'Already have an account? Login') : t('auth.createAccount', 'Create account');
+  const setAuthMode = () => {
+    authTitle.textContent = t('auth.title', 'Sign in to your account');
+    authDesc.textContent = t('auth.desc', 'Access your requests and manage incoming messages.');
+    authSubmit.querySelector('span').textContent = t('auth.login', 'Login');
     loginNote.textContent = '';
   };
 
-  const openAuth = () => { setAuthMode('login'); authModal.classList.add('is-open'); authModal.setAttribute('aria-hidden','false'); setTimeout(() => document.getElementById('loginEmail')?.focus(), 50); };
-  const closeAuth = () => { authModal.classList.remove('is-open'); authModal.setAttribute('aria-hidden','true'); loginNote.textContent=''; };
-  const openRequests = async () => { await updateRequestDashboard(); requestsPanel.classList.add('is-open'); requestsPanel.setAttribute('aria-hidden','false'); };
-  const closeRequests = () => { requestsPanel.classList.remove('is-open'); requestsPanel.setAttribute('aria-hidden','true'); };
+  const openAuth = () => { setAuthMode(); authModal.classList.add('is-open'); authModal.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; setTimeout(() => document.getElementById('loginEmail')?.focus(), 50); };
+  const closeAuth = () => { authModal.classList.remove('is-open'); authModal.setAttribute('aria-hidden','true'); loginNote.textContent=''; document.body.style.overflow = ''; };
+  const openRequests = async () => { await updateRequestDashboard(); requestsPanel.classList.add('is-open'); requestsPanel.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; };
+  const closeRequests = () => { requestsPanel.classList.remove('is-open'); requestsPanel.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; };
 
   async function getCurrentUser() {
     if (!supabaseClient) return null;
@@ -575,6 +755,8 @@
   }
 
   async function updateRequestDashboard() {
+    requestsNote.textContent = '';
+    requestsNote.classList.remove('is-error');
     if (!supabaseClient) {
       requestCount.textContent = '—'; newRequestCount.textContent = '—';
       requestsList.innerHTML = `<div class="requests-empty"><i class="fa-solid fa-plug-circle-xmark"></i><div>Configure js/supabase-config.js with the same Supabase URL and anon key used by the main app.</div></div>`;
@@ -595,17 +777,81 @@
     const items = requests || [];
     requestCount.textContent = items.length;
     newRequestCount.textContent = items.filter(r => r.status === 'new').length;
+    const visibleItems = requestsFilter === 'all'
+      ? items
+      : requestsFilter === 'completed'
+        ? items.filter(r => (r.status || 'new') === 'completed')
+        : items.filter(r => (r.status || 'new') !== 'completed');
     if (!items.length) { requestsList.innerHTML = `<div class="requests-empty"><i class="fa-regular fa-envelope"></i><div>${t('requests.empty','No requests yet.')}</div></div>`; return; }
-    requestsList.innerHTML = items.map(r => {
+    if (!visibleItems.length) { requestsList.innerHTML = `<div class="requests-empty"><i class="fa-solid fa-check-double"></i><div>${t('requests.emptyFiltered','No requests in this view.')}</div></div>`; return; }
+    requestsList.innerHTML = visibleItems.map(r => {
       const date = new Date(r.created_at).toLocaleString(currentLang === 'ar' ? 'ar-SA' : 'en-SA', { dateStyle:'medium', timeStyle:'short' });
-      return `<article class="request-item"><div class="request-item-top"><h3>${escapeHtml(r.name || '—')}</h3><span class="request-status">${escapeHtml(r.status || 'new')}</span></div><div class="request-meta"><span><i class="fa-regular fa-envelope"></i> ${escapeHtml(r.email || '')}</span><span><i class="fa-solid fa-tag"></i> ${escapeHtml(r.subject || '')}</span><span><i class="fa-regular fa-clock"></i> ${escapeHtml(date)}</span><span>${escapeHtml(r.id)}</span></div><p class="request-message">${escapeHtml(r.message || '')}</p><div class="request-badge"><i class="fa-solid fa-circle"></i> ${t('requests.newBadge','New request')}</div></article>`;
+      const status = r.status || 'new';
+      const statusLabel = t(`requests.status.${status}`, status);
+      const statusControl = isStaff
+        ? `<select class="request-status-select" data-request-status="${escapeHtml(r.id)}" aria-label="Request status"><option value="new" ${status==='new'?'selected':''}>${t('requests.status.new','Waiting')}</option><option value="in_progress" ${status==='in_progress'?'selected':''}>${t('requests.status.in_progress','In progress')}</option><option value="completed" ${status==='completed'?'selected':''}>${t('requests.status.completed','Completed')}</option></select>`
+        : `<span class="request-status request-status-${escapeHtml(status)}">${escapeHtml(statusLabel)}</span>`;
+      const deleteControl = isStaff
+        ? `<button type="button" class="request-delete-btn" data-request-delete="${escapeHtml(r.id)}" aria-label="${escapeHtml(t('requests.delete','Delete'))}" title="${escapeHtml(t('requests.delete','Delete'))}"><i class="fa-solid fa-trash-can"></i></button>`
+        : '';
+      const itemClass = status === 'completed' ? 'request-item is-completed' : 'request-item';
+      return `<article class="${itemClass}"><div class="request-item-top"><h3>${escapeHtml(r.name || '—')}</h3><div class="request-item-controls">${statusControl}${deleteControl}</div></div><div class="request-meta"><span><i class="fa-regular fa-envelope"></i> ${escapeHtml(r.email || '')}</span><span><i class="fa-solid fa-tag"></i> ${escapeHtml(r.subject || '')}</span><span><i class="fa-regular fa-clock"></i> ${escapeHtml(date)}</span><span>${escapeHtml(r.id)}</span></div><p class="request-message">${escapeHtml(r.message || '')}</p></article>`;
     }).join('');
+    if (isStaff) {
+      requestsList.querySelectorAll('[data-request-status]').forEach(select => {
+        select.addEventListener('change', async (event) => {
+          const id = event.target.dataset.requestStatus;
+          const newValue = event.target.value;
+          event.target.disabled = true;
+          const { data, error } = await supabaseClient.from('public_requests').update({ status: newValue }).eq('id', id).select();
+          event.target.disabled = false;
+          if (error) {
+            console.error('Failed to update request status', error);
+            requestsNote.textContent = error.message || 'Failed to update status.';
+            requestsNote.classList.add('is-error');
+            return;
+          }
+          if (!data || !data.length) {
+            console.warn('Status update affected 0 rows — likely blocked by a Row Level Security policy.', { id, newValue });
+            requestsNote.textContent = 'Update was blocked (0 rows changed). This is usually a Supabase Row Level Security permission issue — check that your account has an active manager/supervisor role.';
+            requestsNote.classList.add('is-error');
+            return;
+          }
+          await updateRequestDashboard();
+        });
+      });
+      requestsList.querySelectorAll('[data-request-delete]').forEach(btn => {
+        btn.addEventListener('click', async (event) => {
+          const id = event.currentTarget.dataset.requestDelete;
+          const confirmed = window.confirm(t('requests.deleteConfirm', 'Delete this request? This cannot be undone.'));
+          if (!confirmed) return;
+          event.currentTarget.disabled = true;
+          const { data, error } = await supabaseClient.from('public_requests').delete().eq('id', id).select();
+          if (error) {
+            console.error('Failed to delete request', error);
+            requestsNote.textContent = error.message || 'Failed to delete request.';
+            requestsNote.classList.add('is-error');
+            event.currentTarget.disabled = false;
+            return;
+          }
+          if (!data || !data.length) {
+            console.warn('Delete affected 0 rows — likely blocked by a Row Level Security policy.', { id });
+            requestsNote.textContent = 'Delete was blocked (0 rows changed). Make sure the delete policy from supabase-shared-requests.sql has been run in your Supabase project.';
+            requestsNote.classList.add('is-error');
+            event.currentTarget.disabled = false;
+            return;
+          }
+          await updateRequestDashboard();
+        });
+      });
+    }
   }
 
   function escapeHtml(value) { return String(value).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    formNote.classList.remove('is-success');
     if (!supabaseClient) { formNote.textContent = 'Supabase is not configured yet.'; return; }
     const data = new FormData(form);
     const user = await getCurrentUser();
@@ -618,9 +864,14 @@
       status: 'new'
     };
     formNote.textContent = t('form.sending','Sending...');
+    window.showBasmaLoader(t('loader.sending', 'Sending your request...'));
     const { error } = await supabaseClient.from('public_requests').insert(payload);
-    if (error) { formNote.textContent = error.message; return; }
-    formNote.textContent = t('form.sent','Your request has been sent.');
+    if (error) { window.hideBasmaLoader(); formNote.textContent = error.message; return; }
+    window.showBasmaLoader(t('loader.thanks', 'Thank you for trusting us! We will be in touch within 24 to 48 hours.'));
+    await new Promise((resolve) => setTimeout(resolve, 3500));
+    window.hideBasmaLoader();
+    formNote.innerHTML = `<strong>${t('form.thanksTitle','Thank you for contacting us')}</strong><br>${t('form.thanks','Your request has been received successfully. We will contact you within 24 to 48 hours.')}`;
+    formNote.classList.add('is-success');
     form.reset();
     if (user) await updateRequestDashboard();
   });
@@ -631,7 +882,14 @@
   });
   [authClose, authBackdrop].forEach(el => el.addEventListener('click', closeAuth));
   [requestsClose, requestsBackdrop].forEach(el => el.addEventListener('click', closeRequests));
-  authModeToggle.addEventListener('click', () => setAuthMode(authMode === 'login' ? 'signup' : 'login'));
+  requestsFilters.querySelectorAll('[data-request-filter]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (requestsFilter === btn.dataset.requestFilter) return;
+      requestsFilter = btn.dataset.requestFilter;
+      requestsFilters.querySelectorAll('[data-request-filter]').forEach(b => b.classList.toggle('is-active', b === btn));
+      await updateRequestDashboard();
+    });
+  });
 
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -643,22 +901,15 @@
     const originalLabel = submitLabel ? submitLabel.textContent : '';
     authSubmit.disabled = true;
     authSubmit.classList.add('is-loading');
-    if (submitLabel) submitLabel.textContent = authMode === 'signup' ? 'Creating account...' : 'Signing in...';
+    if (submitLabel) submitLabel.textContent = 'Signing in...';
     if (submitIcon) submitIcon.className = 'fa-solid fa-spinner fa-spin';
     loginNote.textContent = '';
 
     try {
-      if (authMode === 'signup') {
-        const { data, error } = await supabaseClient.auth.signUp({ email, password });
-        if (error) { loginNote.textContent = error.message; return; }
-        if (data.session) { closeAuth(); openRequests(); }
-        else loginNote.textContent = 'Account created. Check your email to confirm your account, then sign in.';
-        return;
-      }
-
       const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
       if (error) { loginNote.textContent = error.message; return; }
       closeAuth();
+      await window.showBasmaLoaderFor(3000, t('loader.signingIn', 'Signing you in...'));
       openRequests();
     } finally {
       authSubmit.disabled = false;
@@ -674,7 +925,7 @@
   });
   if (supabaseClient) {
     supabaseClient.auth.onAuthStateChange((_event, session) => {
-      loginOpen.querySelector('span').textContent = session ? t('auth.portal','Portal') : t('auth.login','Login');
+      loginOpen.querySelector('span').textContent = session ? 'Portal' : 'Login';
     });
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeAuth(); closeRequests(); } });
