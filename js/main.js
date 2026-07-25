@@ -303,7 +303,7 @@
       'contact.heading': 'Get a free<br>quote today.',
       'contact.desc': 'Tell us about your project, and our team will get back to you with a tailored proposal.',
       'contact.coverage': 'Nationwide Coverage, Saudi Arabia',
-      'form.name': 'Name', 'form.email': 'Email', 'form.subject': 'Project Type', 'form.message': 'Message', 'form.send': 'Send Message',
+      'form.name': 'Name', 'form.email': 'Email', 'form.phone': 'Phone Number', 'form.subject': 'Project Type', 'form.message': 'Message', 'form.send': 'Send Message',
       'form.residential': 'Residential', 'form.commercial': 'Commercial', 'form.infrastructure': 'Infrastructure', 'form.other': 'Other',
       'form.sending': 'Sending…', 'form.sent': 'Thank you — our planning team will be in touch within one business day.',
       'panel.location': 'Location', 'panel.client': 'Client', 'panel.scale': 'Scale', 'panel.year': 'Target Year',
@@ -347,7 +347,7 @@
       'contact.heading': 'احصل على عرض سعر<br>مجاني اليوم.',
       'contact.desc': 'أخبرنا عن مشروعك، وسيتواصل معك فريقنا بعرض مخصص يلبي احتياجاتك.',
       'contact.coverage': 'تغطية شاملة لكافة أنحاء المملكة العربية السعودية',
-      'form.name': 'الاسم', 'form.email': 'البريد الإلكتروني', 'form.subject': 'نوع المشروع', 'form.message': 'الرسالة', 'form.send': 'إرسال الرسالة',
+      'form.name': 'الاسم', 'form.email': 'البريد الإلكتروني', 'form.phone': 'رقم الجوال', 'form.subject': 'نوع المشروع', 'form.message': 'الرسالة', 'form.send': 'إرسال الرسالة',
       'form.residential': 'سكني', 'form.commercial': 'تجاري', 'form.infrastructure': 'بنية تحتية', 'form.other': 'أخرى',
       'form.sending': 'جارٍ الإرسال…', 'form.sent': 'شكرًا لك — سيتواصل معك فريق التخطيط لدينا خلال يوم عمل واحد.',
       'panel.location': 'الموقع', 'panel.client': 'العميل', 'panel.scale': 'المساحة', 'panel.year': 'السنة المستهدفة',
@@ -798,7 +798,8 @@
         ? `<button type="button" class="request-delete-btn" data-request-delete="${escapeHtml(r.id)}" aria-label="${escapeHtml(t('requests.delete','Delete'))}" title="${escapeHtml(t('requests.delete','Delete'))}"><i class="fa-solid fa-trash-can"></i></button>`
         : '';
       const itemClass = status === 'completed' ? 'request-item is-completed' : 'request-item';
-      return `<article class="${itemClass}"><div class="request-item-top"><h3>${escapeHtml(r.name || '—')}</h3><div class="request-item-controls">${statusControl}${deleteControl}</div></div><div class="request-meta"><span><i class="fa-regular fa-envelope"></i> ${escapeHtml(r.email || '')}</span><span><i class="fa-solid fa-tag"></i> ${escapeHtml(r.subject || '')}</span><span><i class="fa-regular fa-clock"></i> ${escapeHtml(date)}</span><span>${escapeHtml(r.id)}</span></div><p class="request-message">${escapeHtml(r.message || '')}</p></article>`;
+      const phoneHtml = r.phone ? `<a href="tel:${escapeHtml(String(r.phone).replace(/[^\d+]/g,''))}" class="request-phone"><i class="fa-solid fa-phone"></i> ${escapeHtml(r.phone)}</a>` : '';
+      return `<article class="${itemClass}"><div class="request-item-top"><h3>${escapeHtml(r.name || '—')}</h3><div class="request-item-controls">${statusControl}${deleteControl}</div></div><div class="request-meta"><span><i class="fa-regular fa-envelope"></i> ${escapeHtml(r.email || '')}</span>${phoneHtml}<span><i class="fa-solid fa-tag"></i> ${escapeHtml(r.subject || '')}</span><span><i class="fa-regular fa-clock"></i> ${escapeHtml(date)}</span><span>${escapeHtml(r.id)}</span></div><p class="request-message">${escapeHtml(r.message || '')}</p></article>`;
     }).join('');
     if (isStaff) {
       requestsList.querySelectorAll('[data-request-status]').forEach(select => {
@@ -862,6 +863,7 @@
       requester_id: user?.id || null,
       name: String(data.get('name') || '').trim(),
       email: String(data.get('email') || '').trim(),
+      phone: String(data.get('phone') || '').trim(),
       subject: String(data.get('subject') || '').trim(),
       message: String(data.get('message') || '').trim(),
       status: 'new'
