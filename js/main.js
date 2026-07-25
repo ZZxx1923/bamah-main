@@ -1042,69 +1042,43 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 
   /* =========================================================
-     SOUND TOGGLE — generative site ambience (WebAudio, no assets)
+     INTERACTION SOUND CUE — a subtle hover tick on cards/buttons.
+     No ambient background sound, no toggle: always on. WebAudio
+     requires a user gesture before it can play, so we lazily
+     create/resume the audio context on the very first interaction.
      ========================================================= */
-  const soundBtn = document.getElementById('soundToggle');
-  let audioCtx, ambienceNodes, isPlaying = false;
-
-  function buildAmbience() {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const bufferSize = 2 * audioCtx.sampleRate;
-    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const output = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
-
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = noiseBuffer;
-    noise.loop = true;
-
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 340;
-
-    const gain = audioCtx.createGain();
-    gain.gain.value = 0.05;
-
-    noise.connect(filter).connect(gain).connect(audioCtx.destination);
-    noise.start();
-
-    return { noise, filter, gain };
+  let audioCtx = null;
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
   }
-
-  soundBtn.addEventListener('click', () => {
-    if (!isPlaying) {
-      if (!audioCtx) ambienceNodes = buildAmbience();
-      audioCtx.resume();
-      soundBtn.classList.add('on');
-      soundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-      isPlaying = true;
-    } else {
-      audioCtx.suspend();
-      soundBtn.classList.remove('on');
-      soundBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
-      isPlaying = false;
-    }
+  ['pointerdown', 'touchstart'].forEach(evt => {
+    document.addEventListener(evt, () => { try { getAudioCtx(); } catch (e) {} }, { once: true, passive: true });
   });
 
-  /* Subtle hover sound cue for primary buttons */
-  document.querySelectorAll('.btn, .project-card, .service-card').forEach((el) => {
-    el.addEventListener('pointerenter', () => {
-      if (!audioCtx || !isPlaying) return;
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
+  function playHoverTick() {
+    try {
+      const ctx = getAudioCtx();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
       o.frequency.value = 880;
       g.gain.value = 0.02;
-      o.connect(g).connect(audioCtx.destination);
+      o.connect(g).connect(ctx.destination);
       o.start();
-      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.15);
-      o.stop(audioCtx.currentTime + 0.16);
-    });
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.15);
+      o.stop(ctx.currentTime + 0.16);
+    } catch (e) { /* WebAudio unavailable — fail silently */ }
+  }
+
+  document.querySelectorAll('.btn, .project-card, .service-card, .whyus-card, .estimate-option, .stat-item').forEach((el) => {
+    el.addEventListener('pointerenter', playHoverTick);
   });
 
   /* =========================================================
      Click/tap ripple — visible press feedback on buttons & controls
      ========================================================= */
-  document.querySelectorAll('.btn, .nav-cta, .lang-toggle, .contact-social a').forEach((el) => {
+  document.querySelectorAll('.btn, .nav-cta, .lang-toggle').forEach((el) => {
     el.addEventListener('pointerdown', (e) => {
       const rect = el.getBoundingClientRect();
       const ripple = document.createElement('span');
